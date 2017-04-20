@@ -23,3 +23,5 @@ Pour executer le programme il faut réaliser la commande suivante lorsque on est
 Il va ainsi s'executer et générer un csv dans le meme répertoire contenant les résultats
 
 Info : Le script ne détectera pas si le script JavaScript de Piwik est en commentaire. Il ne marche pas pour les sites en local
+
+Ce projet a été réalisé lors d'un stage chez [Ronan Chardonneau](http://ronan-chardonneau.fr)
