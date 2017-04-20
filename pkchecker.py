@@ -23,7 +23,8 @@ global wrong_type
 list_urls = [URL_base]
 wrong_type = ["png", "jpg","jpeg","gif","doc","zip","pdf","txt"]
 
-c = csv.writer(open("Rapport_Pkchecker_"+ DOMAIN +".csv", "wb"))
+nom_fichier = DOMAIN.split(".")
+c = csv.writer(open("Rapport_Pkchecker_"+ nom_fichier[0] +".csv", "wb"))
 c.writerow(["Url","Piwik"])
 
 class MySpider(BaseSpider):

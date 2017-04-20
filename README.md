@@ -1,4 +1,4 @@
-Cet outil a pour but de passer toutes les pages web d'un site internet dans le but de savoir si il contient le script de Piwik. Cela permet de savoir si il est bien intégré ou non.
+Cet outil a pour but de passer toutes les pages web d'un site internet dans le but de savoir si il contient le script de Piwik. Cela permet de savoir si il est bien intégré ou non. Pour cela il va simplement regarder dans toutes les pages web du site vérifier si dans les scripts de la page il y a la présence de piwik.php.
 Ce script a pour but d'être installé en local. 
 Il est réalisé en python et la bibliothèque Scrapy.
 
@@ -11,7 +11,7 @@ Pour Python, dans le terminal, lancer la commande suivante :
 Elle va installer tout les composants de python.
 
 Maintenant pour installer Scrapy :
-`pip install scrapy`
+`sudo pip install scrapy`
 On a maintenant Python et Scrapy d'installé !
 
 Pour executer le programme il faut réaliser la commande suivante lorsque on est dans le répertoire contenant le programme.
