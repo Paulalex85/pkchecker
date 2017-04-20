@@ -1,3 +1,4 @@
+#Tessier Paul-Alexandre
 from scrapy.selector import HtmlXPathSelector
 from scrapy.spider import BaseSpider
 from scrapy.http import Request
@@ -6,8 +7,8 @@ import csv
 import urllib
 import sys
 
-#URL_base = sys.argv[1]
-URL_base = "https://www.ronan-chardonneau.fr"
+
+URL_base = sys.argv[1]
 DOMAIN = URL_base
 
 if URL_base.startswith('http://'):
@@ -22,8 +23,11 @@ global wrong_type
 list_urls = [URL_base]
 wrong_type = ["png", "jpg","jpeg","gif","doc","zip","pdf","txt"]
 
+c = csv.writer(open("Rapport_Pkchecker_"+ DOMAIN +".csv", "wb"))
+c.writerow(["Url","Piwik"])
+
 class MySpider(BaseSpider):
-    name = "test"
+    name = "pkchecker"
     allowed_domains = [DOMAIN]
     start_urls = [
         URL_base
@@ -39,9 +43,9 @@ class MySpider(BaseSpider):
                 break
         
         if check == True:
-            print "<tr><td>"+ response.url +"</td><td>Present</td></tr>"
+            c.writerow([response.url,"Present"])
         else:
-            print "<tr><td>"+ response.url +"</td><td>Non</td></tr>"
+            c.writerow([response.url,"Non"])
         
         for url in hxs.select('//a/@href').extract():
             if not ( url.startswith('http://') or url.startswith('https://') ):
@@ -54,11 +58,10 @@ class MySpider(BaseSpider):
                     else:
                         list_urls.append(url)
                         yield Request(url, callback=self.parse)
-                    
-
+                        
 process = CrawlerProcess({
     'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
 })
 
 process.crawl(MySpider)
-process.start()
+process.start() 
