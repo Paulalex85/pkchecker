@@ -21,3 +21,5 @@ Pour executer le programme il faut réaliser la commande suivante lorsque on est
 `python ./pkchecker.py http://monsite.com`
 
 Il va ainsi s'executer et générer un csv dans le meme répertoire contenant les résultats
+
+Info : Le script ne détectera pas si le script est en commentaire. Il ne marche pas pour les sites en local
