@@ -9,6 +9,8 @@ import sys
 
 
 URL_base = sys.argv[1]
+if URL_base.endswith('/'):
+    URL_base = URL_base[:-1]
 DOMAIN = URL_base
 
 if URL_base.startswith('http://'):
@@ -21,11 +23,11 @@ global list_urls
 global c
 global wrong_type
 list_urls = [URL_base]
-wrong_type = ["png", "jpg","jpeg","gif","doc","zip","pdf","txt"]
+wrong_type = ["png","jpg","jpeg","gif","doc","zip","pdf","txt"]
 
 nom_fichier = DOMAIN.split(".")
 c = csv.writer(open("Rapport_Pkchecker_"+ nom_fichier[0] +".csv", "wb"))
-c.writerow(["Url","Piwik"])
+c.writerow(["Url","Piwik","Version"])
 
 class MySpider(BaseSpider):
     name = "pkchecker"
@@ -38,19 +40,27 @@ class MySpider(BaseSpider):
         hxs = HtmlXPathSelector(response)
         
         check = False
+        new_version = True
         for script in hxs.select('//script/text()').extract():
+            if 'Piwik.getTracker' in script:
+                new_version = False
             if 'piwik.php' in script:
-                check=True
-                break
+                check = True
         
         if check == True:
-            c.writerow([response.url,"Present"])
+            if new_version == True:
+                c.writerow([response.url,"Present", "Nouvelle Version"])
+            else:
+                c.writerow([response.url,"Present","Ancienne Version"])
         else:
-            c.writerow([response.url,"Non"])
+            c.writerow([response.url,"Non","-"])
         
         for url in hxs.select('//a/@href').extract():
             if not ( url.startswith('http://') or url.startswith('https://') ):
-                url = URL_base + url
+                if not url.startswith('/'):
+                    url = URL_base + '/' + url
+                else:
+                    url = URL_base + url
             if not url in list_urls:
             	if DOMAIN in url:
             	    s = url.split(".")
